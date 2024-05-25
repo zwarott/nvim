@@ -1,3 +1,5 @@
+_G.unpack = unpack  -- Ensure unpack is recognized as a global functions
+
 local config = require("plugins.configs.lspconfig")
 
 local on_attach = config.on_attach
@@ -17,5 +19,5 @@ lspconfig.pyright.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = {"python"},
-  root_dir = lspconfig.util.root_pattern(table.unpack(python_root_files))
+  root_dir = lspconfig.util.root_pattern(unpack(python_root_files))
 })
