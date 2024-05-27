@@ -33,10 +33,10 @@ local opts = {
                 if venv_name then
                     -- Construct the path to the Python executable within the virtual environment
                     local python_executable = string.format("/opt/homebrew/Caskroom/miniforge/base/envs/%s/bin/python3", venv_name)
-                    return { "--python-executable", python_executable }
+                    return { "--python-executable", python_executable, "--config-file", "/Users/zwarott/.config/mypy/config/mypy.ini" }
                 else
                     -- Fallback to system Python or default behavior
-                    return {}
+                    return { "--config-file", "/Users/zwarott/.config/mypy/config/mypy.ini" }
                 end
             end,
         }),
