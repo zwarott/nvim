@@ -5,13 +5,10 @@ local function extract_virtual_env_name(project_dir)
     for _, venv_dir in ipairs(venv_dirs) do
         local venv_path = project_dir .. "/" .. venv_dir
         if vim.fn.isdirectory(venv_path) == 1 then
-            -- Extract the virtual environment name from the directory name
-            return vim.fn.fnamemodify(venv_dir, ":t")
+            -- Return the full path to the virtual environment directory
+            return vim.fn.resolve(venv_path)
         end
     end
-
-    -- Implement additional logic to extract the virtual environment name from configuration files, etc.
-
     -- If no virtual environment found, return nil
     return nil
 end
@@ -28,15 +25,15 @@ local opts = {
             extra_args = function()
                 -- Detect project directory
                 local project_dir = vim.fn.getcwd()  -- Get current working directory
-                -- Extract virtual environment name
-                local venv_name = extract_virtual_env_name(project_dir)
-                if venv_name then
+                -- Extract virtual environment path
+                local venv_path = extract_virtual_env_name(project_dir)
+                if venv_path then
                     -- Construct the path to the Python executable within the virtual environment
-                    local python_executable = string.format("/opt/homebrew/Caskroom/miniforge/base/envs/%s/bin/python3", venv_name)
-                    return { "--python-executable", python_executable, "--config-file", "/Users/zwarott/.config/mypy/config/mypy.ini" }
+                    local python_executable = venv_path .. "/bin/python3"
+                    return { "--python-executable", python_executable, "--config-file", os.getenv("MYPY_CONFIG_FILE") }
                 else
                     -- Fallback to system Python or default behavior
-                    return { "--config-file", "/Users/zwarott/.config/mypy/config/mypy.ini" }
+                    return { "--config-file", os.getenv("MYPY_CONFIG_FILE") }
                 end
             end,
         }),
