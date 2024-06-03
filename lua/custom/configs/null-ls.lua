@@ -29,7 +29,7 @@ local opts = {
                 local venv_path = extract_virtual_env_name(project_dir)
                 if venv_path then
                     -- Construct the path to the Python executable within the virtual environment
-                    local python_executable = venv_path .. "/bin/python3"
+                    local python_executable = venv_path .. "/bin/python"
                     return { "--python-executable", python_executable, "--config-file", os.getenv("MYPY_CONFIG_FILE") }
                 else
                     -- Fallback to system Python or default behavior
