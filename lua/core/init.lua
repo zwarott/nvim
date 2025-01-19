@@ -22,6 +22,11 @@ opt.smartindent = true
 opt.tabstop = 2
 opt.softtabstop = 2
 
+-- Folding
+opt.foldmethod = "indent"  -- Use indentation level for folding
+opt.foldenable = true      -- Enable folding
+opt.foldlevel = 99         -- Start with all folds open
+
 opt.fillchars = { eob = " " }
 opt.ignorecase = true
 opt.smartcase = true
